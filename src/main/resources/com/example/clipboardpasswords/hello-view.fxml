@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="410.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.clipboardpasswords.Controller">
+   <ListView fx:id="listView" managed="false" onKeyReleased="#keyReleased" onMouseClicked="#mouseClicked" prefHeight="282.0" prefWidth="460.0" />
+    <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="200.0">
+        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="360.0">
+            <Button fx:id="buttonJira" mnemonicParsing="false" onAction="#pressJiraButton" text="Jira">
+                <HBox.margin>
+                    <Insets left="5.0" right="5.0" />
+                </HBox.margin>
+            </Button>
+            <Button fx:id="buttonAem" mnemonicParsing="false" onAction="#pressAemButton" text="Aem">
+                <HBox.margin>
+                    <Insets left="5.0" right="5.0" />
+                </HBox.margin>
+            </Button>
+        </HBox>
+        <Button fx:id="buttonShowHideListView" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#pressShowHideButton" prefWidth="163.0" text="Show/Hide clipboard">
+            <HBox.margin>
+                <Insets />
+            </HBox.margin>
+        </Button>
+    </HBox>
+
+    <HBox alignment="CENTER" layoutX="7.0" layoutY="2.0" prefHeight="25.0" prefWidth="444.0">
+        <Label text="Login:" />
+        <TextField fx:id="loginField" prefHeight="25.0" prefWidth="185.0" text="aliaksandr.masliuk" />
+    </HBox>
+    <HBox alignment="CENTER" layoutX="11.0" layoutY="30.0" prefHeight="25.0" prefWidth="444.0">
+        <Label text="Pass:" />
+        <TextField fx:id="passField" prefHeight="25.0" prefWidth="185.0" text="piPpolo@123" />
+    </HBox>
+    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#buttonCopyPressed" text="Copy">
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin>
+    </Button>
+</VBox>
