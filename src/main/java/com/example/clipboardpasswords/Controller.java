@@ -1,15 +1,10 @@
 package com.example.clipboardpasswords;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,17 +16,15 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.*;
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class Controller {
     private static final String JSON_FILE = "passwords.json";
-    @FXML
-    public ListView<String> listView;
     public Button buttonJira;
     public Button buttonAem;
-    public Button buttonShowHideListView;
     @FXML
     private TextField loginField;
     @FXML
@@ -39,7 +32,6 @@ public class Controller {
 
     private Stage stage;
     private Clipboard clipboard;
-    private String lastValue = "";
     private String jiraLoginField = "";
     private String jiraPassField = "";
     private String aemLoginField = "";
@@ -58,31 +50,6 @@ public class Controller {
         buttonAem.requestFocus();
 
         clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-        Thread thread = new Thread(() -> {
-            String value;
-            while (true) {
-                value = getClipboardValue();
-                if (value != null && !value.equals(lastValue)) {
-                    lastValue = value;
-                    String finalValue = value;
-                    Platform.runLater(() -> {
-                        if (listView.getItems().contains(finalValue)){
-                            for (String str : listView.getItems()){
-                                if (str.equals(finalValue)){
-                                    listView.getItems().remove(str);
-                                    break;
-                                }
-                            }
-                        }
-                        listView.getItems().add(finalValue);
-                    });
-                }
-                delay(500);
-            }
-        });
-        thread.setDaemon(true);
-        thread.start();
     }
 
     private void getStringsFromJsonFile() {
@@ -127,29 +94,6 @@ public class Controller {
 
     }
 
-    //Copy selected text
-    public void mouseClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 2) {
-            copySelectedText();
-        }
-    }
-
-    public void keyReleased(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.DELETE){
-            listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
-        }
-        if (keyEvent.getCode() == KeyCode.C){
-            copySelectedText();
-        }
-    }
-
-    private void copySelectedText() {
-        String s = listView.getSelectionModel().getSelectedItem();
-        listView.getItems().remove(s);
-        lastValue = "";
-        setClipboardValue(s);
-    }
-
     @FXML
     protected void buttonCopyPressed() {
         setAlwaysOnTop(stage, true);
@@ -191,16 +135,6 @@ public class Controller {
         clipboard.setContents(new StringSelection(text), null);
     }
 
-    private String getClipboardValue() {
-        try {
-            return (String) clipboard.getData(DataFlavor.stringFlavor);
-        } catch (UnsupportedFlavorException | IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        return null;
-    }
-
     private void delay(int i) {
         try {
             Thread.sleep(i);
@@ -224,10 +158,5 @@ public class Controller {
     public void pressAemButton(ActionEvent actionEvent) {
         loginField.setText(aemLoginField);
         passField.setText(aemPassField);
-    }
-
-    public void pressShowHideButton(ActionEvent actionEvent) {
-        listView.setVisible(!listView.isManaged());
-        listView.setManaged(!listView.isManaged());
     }
 }

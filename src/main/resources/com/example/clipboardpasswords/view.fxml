@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="220.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.clipboardpasswords.Controller">
+    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+         <Button fx:id="buttonJira" mnemonicParsing="false" onAction="#pressJiraButton" text="Jira">
+             <HBox.margin>
+                 <Insets left="5.0" right="5.0" />
+             </HBox.margin>
+         </Button>
+         <Button fx:id="buttonAem" mnemonicParsing="false" onAction="#pressAemButton" text="Aem">
+             <HBox.margin>
+                 <Insets left="5.0" right="5.0" />
+             </HBox.margin>
+         </Button>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="7.0" layoutY="2.0" prefHeight="25.0" prefWidth="444.0">
+        <Label text="Login: " />
+        <TextField fx:id="loginField" prefHeight="25.0" prefWidth="185.0" text="aliaksandr.masliuk" />
+    </HBox>
+    <HBox alignment="CENTER" layoutX="11.0" layoutY="30.0" prefHeight="25.0" prefWidth="444.0">
+        <Label text=" Pass:  " />
+        <TextField fx:id="passField" prefHeight="25.0" prefWidth="185.0" text="piPpolo@123" />
+    </HBox>
+    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#buttonCopyPressed" text="Copy">
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin>
+    </Button>
+</VBox>
